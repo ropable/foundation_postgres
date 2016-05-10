@@ -5,8 +5,9 @@ session. The ``postmaster`` process acts as supervisor, monitoring
 utility processes.
 
 Postmaster is master process called ``postgres``, listens on 1 only TCP
-port (receives client connection requests). Default port: 5432. The
-postmaster must be configured to accept a connection from an IP
+port (receives client connection requests). Default port: 5432 (or 5444
+on Postgres Advanced Server). Postmaster is the **Listener**.
+The postmaster must be configured to accept a connection from an IP
 address.
 
 ![Process and memory architecture](media/images/postgres_process_memory_architecture.jpg)
@@ -22,3 +23,48 @@ address.
 * Logging collector - routes log messages to syslog, eventlog or files.
 * Stats collector - collects usage statistics by relation and block.
 * Archiver - archives write-ahead log files.
+
+## User backend process
+
+* Master process spawns a new server process for each connection request
+  that is detected.
+* Authentication: IP, user and password.
+* Authorisation: verify user permissions.
+* User backend process is called ``postgres`` (not Postmaster).
+* Callback to client, wait for SQL.
+* Query is transmitted using plain text.
+* Info about the Postmaster process can be found in
+  /usr/lib/postgresql/9.x/data/postmaster.pid
+
+List Postgres processes:
+
+    ps aux | grep postgres
+
+## Disk buffering (read/write)
+
+Postgres buffer cache (shared buffers in shared memory) reduces OS
+reads. Single read IO is done on disk, cached in the buffer. Blocks are
+written to disk only when needed: to make room for new block, or at
+checkpoint time.
+
+The background writer scan attempts to ensure an adequte supply of clean
+buffers. Backend writes dirty buffers as needed to WAL buffers. Flushing
+of WAL buffers happens periodically, on commit or when buffers are full.
+WAL buffers are flushed to the Transaction log. Group commit can be
+configured to reduce disk write IO.
+
+## Commit and Checkpoint
+
+* Before commit - uncommitted updates are in memory.
+* After commit - committed updates written from shared memory to disk
+  (write-ahead log file).
+* After checkpoint - modified data pages are written from shared memory
+  to the data files.
+
+## Statement Processing
+
+* Parse - check syntax, identify query type, command processor if req'd,
+  break query into tokens.
+* Optimise - planner generates plan, uses db statistics, query cost
+  calculation, chooses best plan.
+* Execute - execute query based on query plan.
