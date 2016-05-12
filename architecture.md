@@ -68,3 +68,36 @@ configured to reduce disk write IO.
 * Optimise - planner generates plan, uses db statistics, query cost
   calculation, chooses best plan.
 * Execute - execute query based on query plan.
+
+# Physical database architecture
+
+A cluster is a collection of databases managed by one server instance.
+Each cluster has a separate data directory, TCP port and set of
+processes. A single cluster can contain multiple databases.
+
+On disk, there is a file per table and file per index. A table-space is
+a directory on disk. Each database that uses a table-space gets a
+subdirectory. Each relation (table) using that table-space/database
+combo gets 1+ files in 1GB chunks. Each file name is a number that
+increments when the file exceeds 1GB.
+
+```sql
+# Show all database OID and names:
+select oid, datname from pg_database;
+# Show a table file path:
+select pg_relation_filepath('tablename');
+```
+
+## Page layout
+
+A page is the smallest storage block on disk. It contains:
+
+* Page header - general information, pointers to free space. 24b.
+* Row/index pointers - array of offset/length pairs pointing to the
+  actual rows/index entries. 24b.
+* Free space - unallocated space.
+* Row/index entry - actual row or index entry data.
+
+Page structure:
+
+![Page structure](media/images/pg_page_structure.png)
