@@ -1,4 +1,4 @@
-# Installation
+# PostgreSQL Installation
 
 Postgres runs as a daemon (Unix/Linux) or service (Windows). During
 installation a ``postgres`` locked user will be created on Linux. It
