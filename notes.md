@@ -19,3 +19,5 @@ Max field size              | 1 GB
 Max rows per table          | Unlimited
 Max columns per table       | 25-1600 (depending on column types)
 Max indexes per table       | Unlimited
+
+Current course progress: Module 6, Connection settings.
