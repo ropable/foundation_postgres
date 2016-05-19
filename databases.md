@@ -94,7 +94,7 @@ REVOKE CONNECT ON DATABASE dbname TO username;
 
 # Schemas
 
-A database database one or more schemas, which is turn contain tables,
+A database contains one or more schemas, which is turn contain tables,
 functions, sequences, etc. Schemas are owned by a user. By default all
 databases contain a ``public`` schema. Benefits:
 
@@ -107,6 +107,10 @@ Docs: http://www.postgresql.org/docs/9.5/static/ddl-schemas.html
 
 ```sql
 CREATE SCHEMA newschema;
+CREATE SCHEMA newschema AUTHORIZATION rolename;
+# List schemas:
+\dn
+SELECT * from pg_catalog.pg_namespace;
 # Create a table in the schema:
 CREATE TABLE newschema.mytable;
 # Display the current schema search path:
