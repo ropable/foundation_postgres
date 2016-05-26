@@ -20,4 +20,4 @@ Max rows per table          | Unlimited
 Max columns per table       | 25-1600 (depending on column types)
 Max indexes per table       | Unlimited
 
-Current course progress: Module 9
+Current course progress: Module 11
