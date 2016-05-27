@@ -1,4 +1,9 @@
 # Foundations of Postgres Adminstration 9.5
 
-0. [Notes](notes.md)
-1. [Architecture](architecture.md)
+1. [Notes](notes.md)
+2. [Architecture](architecture.md)
+3. [Installation](installation.md)
+4. [Configuration](configuration.md)
+5. [Databases](databases.md)
+6. [Tools](tools.md)
+7. [Security](security.md)

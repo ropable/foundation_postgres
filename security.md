@@ -46,3 +46,8 @@ ALTER TABLE accounts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY account_managers ON accounts TO managers USING (manager = current_user);
 CREATE POLICY user_policy ON users USING (user = current_user);
 ```
+
+# Privileges
+
+Users need ``CONNECT`` privileges on a database, ``USAGE`` on a schema
+and ``SELECT`` on a table or view. See [Databases](databases.md).

@@ -90,6 +90,10 @@ ALTER ROLE username WITH PASSWORD 'password';
 GRANT CONNECT ON DATABASE dbname TO username;
 \h REVOKE
 REVOKE CONNECT ON DATABASE dbname TO username;
+# Grant usage of a schema:
+GRANT USAGE ON SCHEMA schemaname TO username;
+# Grant connect on a table:
+GRANTE CONNECT TO TABLE tablename TO username;
 ```
 
 # Schemas
