@@ -70,9 +70,9 @@ usable backup. File backups only work for complete backup and
 restoration of an entire database cluster. File system snapshots can be
 used for live servers. Example file system backup:
 
-# Stop database cluster: ``pg_ctlclust 9.5 clustername stop``
-# Copy the /var/lib/postgresql/9.5/<clustername> directory to another
-location (e.g. tar -cvf backup.tar /var/lib/postgresql/9.5/<clustername>)
+1. Stop database cluster: ``pg_ctlclust 9.5 clustername stop``
+2. Copy the /var/lib/postgresql/9.5/<clustername> directory to another
+   location (e.g. tar -cvf backup.tar /var/lib/postgresql/9.5/<clustername>)
 
 
 # Continuous archiving
@@ -93,4 +93,46 @@ transaction logs to a local directory. Example:
 
 ```
 pg_receivelog -h localhost -D /mnt/archivedir
+```
+
+# Base backup using ``pg_basebackup``
+
+Example:
+
+```
+pg_basebackup -h localhost -D /mnt/archive
+```
+
+# Point-in-time recovery
+
+PITR is the ability to restore a database cluster up to the present or
+to a specified point of time in the past. Uses a full database cluster
+backup and the write-ahead logs in the ``pg_xlog`` subdirectory. Must be
+configured before it is needed (write-ahead log archiving must be
+enabled). Steps:
+
+1. Stop the server.
+2. Copy the data directory and transaction logs.
+3. Remove all directories and files from the cluster data dir.
+4. Restore the db files from your file system backup.
+5. Verify the ownership of restored backup directories (must not be root
+   user).
+6. Remove any files present in ``pg_xlog``.
+7. If you have unarchived WAL segment files recovered from crashed
+   cluster, copy them into ``pg_xlog``.
+8. Create a recovery command file **recovery.conf** in the cluster data
+   directory.
+9. Start the server.
+10. Upon completion, the server will rename recovery.conf to recovery.done.
+
+```recovery.conf``` file:
+
+```
+# Unix:
+restore_command = 'cp /mnt/archive/%f "%p"'
+recovery_target_name
+recovery_target_time
+recovery_target_xid
+recovery_target_inclusive
+recovery_target_action  # Can be pause (default), promote or shutdown
 ```
