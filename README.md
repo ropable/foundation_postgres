@@ -7,3 +7,5 @@
 5. [Databases](databases.md)
 6. [Tools](tools.md)
 7. [Security](security.md)
+8. [Backup](backup.md)
+9. [Maintenance](maintenance.md)
