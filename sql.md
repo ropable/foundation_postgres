@@ -107,6 +107,10 @@ SELECT user;
 SELECT current_database();
 # Port:
 show port;
+# Show the size of a table:
+SELECT pg_size_pretty(pg_relation_size('tablename'));
+# Show autovacuum parameters:
+SELECT name, settings FROM pg_settings WHERE name LIKE 'autovacuum%';
 ```
 
 # Lab exercise answers
