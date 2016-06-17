@@ -29,6 +29,8 @@ transaction ID wraparound failure. Row transaction IDs are 32-bit numbers,
 maximum of ~4 billion, behaviour is to recycle IDs when maximum is
 reached (wraparound).
 
+The visibility map simply stores one bit per heap page.
+
 By default, autovacuuming is enable for databases (``postgres.conf``).
 The behaviour of autovacuum workers can be altered. Per-table settings
 can be set using ``ALTER TABLE`` (e.g. autovacuum_enabled).

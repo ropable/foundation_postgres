@@ -90,7 +90,8 @@ select pg_relation_filepath('tablename');
 
 ## Page layout
 
-A page is the smallest storage block on disk. It contains:
+A page is the smallest storage block on disk. By default, it is 8 kb.
+It contains:
 
 * Page header - general information, pointers to free space. 24b.
 * Row/index pointers - array of offset/length pairs pointing to the

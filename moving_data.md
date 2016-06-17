@@ -4,6 +4,8 @@ A flat file is a text file that usually contains one record per line.
 Postgres offers the ``COPY`` command to load flat files into the
 database and vice versa (``COPY TO`` and ``COPY FROM`).
 
+The default quotation character in CSV output is double-quote (").
+
 ``COPY TO`` is used to move data from a table to a file.
 
 ```sql

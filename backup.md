@@ -97,7 +97,7 @@ pg_receivelog -h localhost -D /mnt/archivedir
 
 # Base backup using ``pg_basebackup``
 
-Example:
+``pg_basebackup`` supports both plain and tar output formats. Example:
 
 ```
 pg_basebackup -h localhost -D /mnt/archive

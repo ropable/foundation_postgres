@@ -41,6 +41,7 @@ SHOW work_mem;
 SELECT name, setting FROM pg_settings;
 SELECT pg_reload_conf();
 ALTER USER username SET work_mem=10240;
+SHOW ALL;
 ```
 
 # Connection settings
@@ -131,7 +132,7 @@ When to log:
 * ``log_min_messages`` (default WARNING) - messages of this severity and
   above are sent to the server.
 * ``log_min_error_statement`` (default ERROR) - when a message of this
-  severity of higer is logged, the statement that caused it is also
+  severity or higher is logged, the statement that caused it is also
   logged.
 * ``log_min_duration_statement`` (default -1, disabled) - when a
   statement runs for at least this long (ms) is written to the server
