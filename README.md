@@ -11,6 +11,7 @@
 9. [Maintenance](maintenance.md)
 10. [Data Dictionary](data_dict.md)
 11. [Moving data](moving_data.md)
+12. [SQL reference](sql.md)
 
 # Advanced PostgreSQL Administration 9.5
 
