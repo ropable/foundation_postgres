@@ -119,7 +119,8 @@ Bernoulli used seq IO, scans full table picking tuples randomly. Example:
 * Avoid expressions as the optimizer may ignore indexes on such columns.
 * Use equijoins wherever possible to improve SQL efficiency.
 * Try changing the access path and join order with hints.
-* Avoid full table scans is using an index is more efficient.
+* Avoid full table scans if using an index is more efficient.
+* Try disabling sequential scans with ``set enable_seqscan=false;``
 * Join order can have a significant effect on performance.
 * Use views/materialized views for complex queries.
 
@@ -146,7 +147,7 @@ INDEX name ON table (lower(column1));``
 A partial index can be built on a subset of table rows. The index
 contains entries only for those rows that satisfy the predicate.
 Example: ``CREATE INDEX index ON table(column1) WHERE
-province='VALUE';``
+column1='VALUE';``
 
 BRIN (Block Range Index) store metadata on range (min and max) of pages.
 Block range are by default 1 MB and ``pages_per_range`` storage
@@ -159,3 +160,10 @@ Examining index usage: it is difficult to form a general procedure for
 determining which indexes to create. Always run ANALYZE first. Use real
 data for expermentation. When indexes are not used, it can be useful for
 testing to force their usage with hints.
+
+# Review the final plan
+
+* Check again for missing indexes.
+* Check table stats are correct.
+* Check large table sequential scans.
+* Compare the cost of first or final plans.
