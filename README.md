@@ -16,7 +16,7 @@
 # Advanced PostgreSQL Administration 9.5
 
 1. [SQL Tuning](sql_tuning.md)
-2. Performance tuning
+2. [Performance tuning](performance_tuning.md)
 3. Performance benchmarking
 4. WAL Archiving
 5. Streaming replication
