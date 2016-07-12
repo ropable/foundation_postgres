@@ -120,3 +120,55 @@ risk of data corruption - DON'T DO IT!!! Can be turned off during
 initial loading of a new db cluster load from a backup (bulk load). Note
 that ``synchronous_commit=off`` can provide similar benefits for
 noncritical transactions without risk of data corruption.
+
+*pg_test_fsync* can determine the fastest ``wal_sync_method`` on your
+specific system (method is used for forcing WAL updates out to disk.
+It reports average sync operation time for different methods. Compare
+the methods and choose the one with the fastest performance for your
+hardware (check ``postgres.conf`` for options).
+
+``pg_prewarm``: this extension can be used to load relation (table) data into either
+the operating system buffer cache or into the Postgres buffer cache. It
+supports ``prefetch`` or ``read`` methods for OS cache and ``buffer``
+method for shared buffers. Example:
+
+```sql
+CREATE EXTENSION pg_prewarm;
+SELECT pg_prewarm('customers');
+```
+
+Tips for inserting large amounts of data:
+
+* While inserting data using multiple inserts use ``BEGIN`` at the start
+  and ``COMMIT`` at the end.
+* Use ``COPY`` to load all the rows in one command, instead of a series
+  of ``INSERT`` commands.
+* If you cannot use COPY, it might help to use ``PREPARE`` to create a
+  prepared ``INSERT`` statement and then use ``EXECUTE`` as many times
+  as req'd.
+* If you are loading a freshly created table the faster method is to
+  create the table, bulk-load the data using ``COPY``, then create any
+  indexes needed.
+* It might be helpful to drop FK constraints, load the data and then
+  re-create the constraints.
+* Temporarily increasing the ``maintenance_work_mem`` and
+  ``max_wal_size`` config variables when loading large amounts of data
+  can improve performance.
+* Disable WAL Archival and Streaming Replication.
+* Triggers and Autovacuuming can also be disabled.
+* Certain commands run faster if ``wal_level`` is minimal: CREATE TABLE
+  AS SELECT, CREATE INDEX, ALTER TABLE ADD PRIMARY KEY, ALTER TABLE SET
+  TABLESPACE, CLUSTER, COPY FROM.
+
+Non-durable settings - Postgres can be configured to run without
+durability for non-production, RO or reporting servers. Durability
+guarantees transactions but adds overhead.
+
+* Place the database cluster's data dir in a RAM disk.
+* Turn off ``fsync`` (there is no need to flush data to disk).
+* Turn off ``full_page_writes`` (there is no need to guard against
+  partial page writes).
+* Increase ``wal_max_size`` and ``checkpoint_timeout``; this reduces the
+  frequency of checkpoints.
+* Turn off ``synchronous_commit``; there might be no need to write the
+  WAL to disk every commit.
