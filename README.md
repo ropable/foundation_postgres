@@ -17,7 +17,7 @@
 
 1. [SQL Tuning](sql_tuning.md)
 2. [Performance tuning](performance_tuning.md)
-3. Performance benchmarking
+3. [Performance benchmarking](performance_benchmarking.md)
 4. WAL Archiving
 5. Streaming replication
 6. Connection pooling
