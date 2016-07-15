@@ -1,12 +1,12 @@
 # WAL Archiving
 
-# Transaction logging (WAL)
+## Transaction logging (WAL)
 
 WAL Writer writes at each commit. WAL protects the database
 (durability). WAL logs are stored as a set of 16 MB segments. The process of
 switching from one WAL segment to another is called a _log switch_.
 
-# WAL Archiving
+## WAL Archiving
 
 The **Archiver** is an optional background process that invokes the
 ``archive_command`` when ``archive_mode`` is set to on. It copies the
@@ -17,7 +17,7 @@ segment, and are used for PITR and replication.
 Configured in two ways: Archiver process, or ``pg_receivexlog`` tool
 and streamed to the prepared location.
 
-# Archiver process
+## Archiver process
 
 This process can be started by changing the WAL level to ``archive``,
 and setting the ``archive_mode`` parameter to on. The process executes
@@ -33,7 +33,7 @@ exceeded, ``checkpoint_timeout`` seconds pass or whenever the
 ``CHECKPOINT`` command is executed. The ``archive_command`` can be
 anything, but will typically copy the logfile to a location.
 
-# ``pg_receivexlog``
+## ``pg_receivexlog``
 
 ``pg_receivexlog`` streams WAL segments from a running Postgres cluster.
 It connects with a cluster using streaming replication protocol and
