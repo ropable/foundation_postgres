@@ -55,3 +55,34 @@ default, ``pool_hba`` authentication is disable, change
 are supported. To use MD5 authentication, you must register username and
 password in ``pool_passwd``. Users can connect directly to the database
 in which case ``pg_hba.conf`` will be used.
+
+## pgbouncer
+
+**pgbouncer** is a lightweight connection pooler for Postgres. It has
+low memory requirements, it is a database-based pooler thus can connect
+to a database from different clusters, it is not tied to one backend
+server, it supports restart/upgrade without dropping client connections
+and supports both Windows and Linux platforms.
+
+**pgbouncer** supports several types of pooling when rotating
+connections:
+
+* Session pooling - a server connection is assigned to the client app for
+  the life of the client connection (default).
+* Transaction pooling - a server connection is assigned to the client
+  app for the duration of a transaction.
+* Statement pooling - a server connection is assigned to the client for
+  each statement.
+
+An application connects to **pgbouncer** as if it were a Postgres
+database. It then creates a connection to the actual database server or
+reuses one of the existing connections from the pool. **pgbouncer** can
+be downloaded and installed using the Application Stack Builder, or
+compiled from source: https://pgbouncer.github.io/install.html`
+
+Configure using a ``pgbouncer.ini`` file, user authentication in a
+``users.txt`` file. **pgbouncer** has a special management database:
+
+```
+psql -p 6543 -U someuser pgbouncer
+```
