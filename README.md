@@ -19,9 +19,9 @@
 2. [Performance tuning](performance_tuning.md)
 3. [Performance benchmarking](performance_benchmarking.md)
 4. [WAL Archiving](wal_archiving.md)
-5. [Streaming replication](streaming_replication.md`)
+5. [Streaming replication](streaming_replication.md)
 6. [Connection pooling](connection_pooling.md)
-7. Table partitioning
+7. [Table partitioning](table_partitioning.md)
 8. Extensions
 9. Foreign data wrappers
 10. Monitoring
