@@ -16,6 +16,11 @@ reuses them whenever a new connection with the same properties
 cluster-based connection pooling, replication and failover and load
 balancing.
 
+Example scenario; a load balancer with PgPool2 for PostgreSQL
+Master-Slave replication:
+
+![pgpool2-master-slave](media/images/pgpool-1.png)
+
 **pgpool-II** can manage multiple Postgres servers, and manage replication between
 servers also. If the database is replicated, executing a SELECT query on
 any server will return the same result. **pgpool-II** automatically
@@ -33,7 +38,7 @@ to promote a slave to be the new master. After failover it automaticaly
 redirects all write load to the new master and forgets the failed
 master.
 
-## **pgpool-II** installation
+## **pgpool-II** installation and configuration
 
 Only available on Linux-based systems with UNIX architectures.
 Installation required gcc 2.9+ and GNU make. Configuration is
@@ -49,12 +54,18 @@ can be produced with the ``pg_md5`` command:
 generated after installation.
 
 ``pool_hba.conf`` can be used to implement host-based access control. By
-default, ``pool_hba`` authentication is disable, change
+default, ``pool_hba`` authentication is disabled, change
 ``enable_pool_hba`` to on to enable it. Format and usage is similar to
 ``pg_hba.conf``, but only trust, reject, md5 and pam for METHOD field
 are supported. To use MD5 authentication, you must register username and
 password in ``pool_passwd``. Users can connect directly to the database
 in which case ``pg_hba.conf`` will be used.
+
+Config guides:
+
+* http://www.pgpool.net/docs/latest/tutorial-en.html
+* https://sonnguyen.ws/replication-load-balance-in-posgresql-replication-with-pgpool2/
+
 
 ## pgbouncer
 
