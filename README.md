@@ -23,7 +23,7 @@
 6. [Connection pooling](connection_pooling.md)
 7. [Table partitioning](table_partitioning.md)
 8. [Extensions](extensions.md)
-9. Foreign data wrappers
+9. [Foreign data wrappers](foreign_data_wrappers.md)
 10. Monitoring
 11. Database security
 12. Upgrading best practices
