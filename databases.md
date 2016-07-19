@@ -59,6 +59,11 @@ roles subsumes the concepts of "users" and "groups".
 Note that there is a **public** role that is granted to all users by
 default. Users with the **public** role can connect to all databases.
 
+In modern versions of Postgres, the User & Role concepts have been merged:
+a "role" can have the ability to login, the ability to "inherit" from
+other roles (like a user being a member of a group, or a group being a
+member of another group), and access to database objects.
+
 Role docs: http://www.postgresql.org/docs/9.5/static/user-manag.html
 
 ```sql
@@ -67,7 +72,6 @@ ALTER ROLE rolename WITH PASSWORD 'password';
 ALTER ROLE rolename WITH CREATEDB;
 REVOKE CONNECT ON DATABASE sensitivedb FROM public;
 ```
-
 
 # Privileges
 
@@ -80,7 +84,7 @@ can be granted on a tablespace, database, schema, table, function, etc.
 to database users, groups or roles. Note that ``GRANT foo WITH GRANT
 OPTION`` allows the user to grant the privilege.
 
-Privs can be revoked using ``REVOKE``.
+Privileges can be revoked using ``REVOKE``.
 
 ```sql
 # Get help with syntax:
@@ -93,7 +97,10 @@ REVOKE CONNECT ON DATABASE dbname TO username;
 # Grant usage of a schema:
 GRANT USAGE ON SCHEMA schemaname TO username;
 # Grant connect on a table:
-GRANTE CONNECT TO TABLE tablename TO username;
+GRANT CONNECT TO TABLE tablename TO username;
+# Grant create role or database:
+ALTER ROLE username CREATEROLE;
+ALTER ROLE username CREATEDB;
 ```
 
 # Schemas

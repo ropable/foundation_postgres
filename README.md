@@ -22,7 +22,7 @@
 5. [Streaming replication](streaming_replication.md)
 6. [Connection pooling](connection_pooling.md)
 7. [Table partitioning](table_partitioning.md)
-8. Extensions
+8. [Extensions](extensions.md)
 9. Foreign data wrappers
 10. Monitoring
 11. Database security
