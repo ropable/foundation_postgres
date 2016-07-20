@@ -24,6 +24,6 @@
 7. [Table partitioning](table_partitioning.md)
 8. [Extensions](extensions.md)
 9. [Foreign data wrappers](foreign_data_wrappers.md)
-10. Monitoring
+10. [Monitoring](monitoring.md)
 11. Database security
 12. Upgrading best practices
