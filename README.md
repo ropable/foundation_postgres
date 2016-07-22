@@ -26,4 +26,4 @@
 9. [Foreign data wrappers](foreign_data_wrappers.md)
 10. [Monitoring](monitoring.md)
 11. [Database security](database_security.md)
-12. Upgrading best practices
+12. [Upgrading best practices](upgrading.md)
