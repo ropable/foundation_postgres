@@ -89,3 +89,90 @@ GRANT and users can be added to a group using ``ALTER GROUP``. A group
 can be granted cluster and object privileges.
 
 # Row level security
+
+Postgres 9.5 supports security policies for limiting access at a table
+row level. By default, all rows of a table are visible. Once RLS is
+enabled on a table, all queries are filtered by the security policy.
+Security policies are controlled by the DBA rather than applications.
+RLS offers stronger security as it is applied at the database level.
+
+Setup using ``row_security`` config parameter. Policies:
+
+* CREATE POLICY
+* ALTER POLICY
+* DROP POLICY
+
+Enable/disable RLS for a table:
+
+```sql
+ALTER TABLE name ENABLE ROW LEVEL SECURITY;
+ALTER TABLE name DISABLE ROW LEVEL SECURITY;
+```
+
+**NOTE**: table owners, superusers and roles with the ``BYPASSRLS``
+attribute will bypass the RLS policy. ``FORCE ROW LEVEL SECURITY``
+command can be used to force security policy on table owner. A
+default-deny policy is used if no policy exists. Existing policies are
+applied once RLS is enabled.
+
+```sql
+CREATE POLICY name ON tablename ....;
+DROP POLICY [IF EXISTS] name ON tablename;
+```
+
+A policy can grant ability to select, insert, update or delete (or all)
+for rows which match the relevant policy expression. New rows are
+checked against the WITH CHECK expression. Existing rows are checked
+against the USING expression.
+
+If a dropped policy is the last policy on the table, default-deny policy
+is used. It is recommended to ``DISABLE ROW LEVEL SECURITY`` on a table
+after dropping all policies.
+
+# Data encryption
+
+## Storage level encryption
+
+OS provide different tools for storage level encryption: full disk or
+filesystem level encryption.
+
+## Database level encryption
+
+``pgcrypto`` provides a mechanism for encrypting selected columns. It
+supports one-way and two-way encryption. Install using the CREATE
+EXTENSION command. Crypto functions:
+
+* digest - generated a binary hash
+* hmac - calculates a hashed MAC for data with key
+* crypt - hashing a password
+* gen_salt - prepare algo parameters for crypt
+* encrypt, decrypt - enc/decr data using the cipher method
+
+# General security recommendations
+
+* Always keep server patched (OS and software).
+* Firewall the postmaster port appropriately.
+* Isolate the db port from other network traffic.
+* Don't rely solely on your frontend application to prevent unauthorised
+  access to your db.
+* Provide each user with their own login (no shared credentials).
+* Allow the minimum access only.
+* Use roles and classes of privileges.
+* Use views and view security barriers.
+* Use row-level security.
+* Only allow the db superuser to log in from the server locally.
+* Reserve usage of the superuser account for tasks & roles where it is
+  absolutely required.
+* Make as few objects owned by the superuser as necessary.
+* Restrict access to config files to administrators.
+* Disallow host system login by db superuser roles (postgres or
+  enterprisedb).
+* Disallow root login to the db server. Use personal login and then
+  'sudo' to create an audit trail.
+* Use a separate db login to own each database.
+* Keep backups and have a tested recovery plan. Backup location should
+  also be protected.
+* Have scripts perform backups and immediately test them and alert a DBA
+  on any failures.
+* Keep backups physically separate from the db server.
+* AAA verification: authenticate, authorise, audit.
