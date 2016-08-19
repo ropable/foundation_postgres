@@ -48,9 +48,9 @@ Planner is responsible for generating the plan. The Optimizer determines
 the most efficient plan. Cost estimates rely on accurate table
 statistics, gathered with ANALYZE (plus other parameters). The EXPLAIN
 command is used to view a query plan, while ANALYZE will execute the
-query also and display some statistics about the execution.
+query also and display some statistics about the execution. Syntax:
 
-Syntax: ``EXPLAIN [option] statement;``
+    EXPLAIN [option] <SQL statement>;
 
 Plan components:
 
@@ -78,7 +78,6 @@ select relpages, reltuples from pg_class where relname='customer';
 show seq_page_cost;
 show cpu_tuple_cost;
 ```
-
 
 Reviewing explain plans:
 
@@ -111,7 +110,7 @@ tables from a table. Supports SYSTEM and BERNOULLI sample methods.
 System uses random IO, is faster but sampling will vary more wildly.
 Bernoulli used seq IO, scans full table picking tuples randomly. Example:
 
-``` SELECT * FROM pg_class TABLESAMPLE SYSTEM(20);
+    SELECT * FROM pg_class TABLESAMPLE SYSTEM(20);
 
 # Restructuring SQL statements
 
@@ -134,20 +133,23 @@ command. Different types include B-tree (default), Hash, GiST, GIN, BRIN
 You can adjust the ordering of a B-tree index by including the options
 ASC, DESC, NULLS FIRST and/or NULLS LAST. This may save time on sorting.
 
-Indexes can also be used to enforce uniqueness (on B-tree). Example:
-``CREATE UNIQUE INDEX name ON table (column1, [, column2]);`` Postgres
+Indexes can also be used to enforce uniqueness (on B-tree). Postgres
 automatically creates a unique index when a unique constraint or primary
-key is defined for a table.
+key is defined for a table. Example:
+
+    CREATE UNIQUE INDEX name ON table (column1, [, column2]);
 
 An index can be created on a computed value from the table column
 values. These are expensive to maintain. They are useful when retrieval
-speed is more important than insert or update speed. Example: ``CREATE
-INDEX name ON table (lower(column1));``
+speed is more important than insert or update speed. Example:
+
+    CREATE INDEX name ON table (lower(column1));
 
 A partial index can be built on a subset of table rows. The index
 contains entries only for those rows that satisfy the predicate.
-Example: ``CREATE INDEX index ON table(column1) WHERE
-column1='VALUE';``
+Example:
+
+    CREATE INDEX index ON table(column1) WHERE column1='VALUE';
 
 BRIN (Block Range Index) store metadata on range (min and max) of pages.
 Block range are by default 1 MB and ``pages_per_range`` storage
@@ -158,7 +160,7 @@ table.
 
 Examining index usage: it is difficult to form a general procedure for
 determining which indexes to create. Always run ANALYZE first. Use real
-data for expermentation. When indexes are not used, it can be useful for
+data for experimentation. When indexes are not used, it can be useful for
 testing to force their usage with hints.
 
 # Review the final plan
