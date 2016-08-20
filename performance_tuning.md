@@ -35,7 +35,7 @@ indexes: put the transaction log (pg_xlog) on a dedicated disk resource,
 tablespaces can be used to create indexes on separate drives.
 
 The file system makes a difference, a journaling file system is not
-required for the trans log. Multiple options for Linux:
+required for the transaction log. Multiple options exist for Linux:
 
 * EXT2 with sync enabled
 * EXT3 with write-back
@@ -47,10 +47,10 @@ for write-back.
 # Server parameter tuning
 
 Default *postgresql.conf* server parameters are configured for wide
-compatibility, must be tuned to optimal values for best performance.
+compatibility and must be tuned to optimal values for best performance.
 Parameters can be evaluated using difference methods. Basic info needed
 for tuning: database size, largest table size, type and frequency of
-queries, available RAM, no of concurrent connections. PEM has Postgres
+queries, available RAM, no. of concurrent connections. PEM has Postgres
 Expert which can perform and analysis for your server and database.
 
 ``max_connections`` - sets the max no of concurrent connections. Each

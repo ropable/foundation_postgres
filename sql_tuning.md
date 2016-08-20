@@ -71,12 +71,12 @@ Example:
 
 ```sql
 # Show a plan:
-explain select * from edbstore.emp;
+EXPLAIN SELECT * FROM edbstore.emp;
 # Show the pages & tuples used by a table:
-select relpages, reltuples from pg_class where relname='customer';
+SELECT relpages, reltuples FROM pg_class WHERE relname='customer';
 # Show cost params:
-show seq_page_cost;
-show cpu_tuple_cost;
+SHOW seq_page_cost;
+SHOW cpu_tuple_cost;
 ```
 
 Reviewing explain plans:
@@ -100,8 +100,8 @@ with the -z option. Stats are stored in ``pg_class`` and
 
 Syntax: ``ANALYZE [VERBOSE] <table_name>|<column_name>;``
 
-Statistics can be controlled using ALTER TABLE name ALTER COLUMN column
-SET STATISTICS number (where number is 1 < number < 10000). A higher
+Statistics can be controlled using ``ALTER TABLE name ALTER COLUMN column
+SET STATISTICS x`` (where **x** is 1 < x < 10000). A higher
 number will signal the server to gather and update more stats, but may
 slow autovacuum and analyze operations on stat tables.
 
@@ -167,5 +167,5 @@ testing to force their usage with hints.
 
 * Check again for missing indexes.
 * Check table stats are correct.
-* Check large table sequential scans.
-* Compare the cost of first or final plans.
+* Check for large table sequential scans.
+* Compare the cost of first and final plans.
