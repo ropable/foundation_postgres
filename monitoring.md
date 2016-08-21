@@ -2,16 +2,15 @@
 
 ## Database monitoring
 
-DB monitoring consists of capturing and recording db event. This info
-helps a DBA to detect, identify and fix potential db performance issues.
+Database monitoring consists of capturing and recording database events. This info
+helps a DBA to detect, identify and fix potential database performance issues.
 Monitoring statistics make it easier for a DBA to monitori the health
-and performance of DBs. Several monitoring tools are available.
+and performance of databases. Several monitoring tools are available.
 
 ## Database statistics
 
-Database statistics catalog table store db activity information. This
-information is captured by the **Stats Collector** process, and
-includes:
+Database statistics catalog table store database activity information. This
+information is captured by the **Stats Collector** process, and includes:
 
 * Current running sessions
 * Running SQL
@@ -20,10 +19,10 @@ includes:
 * Row counts
 * Index usage
 
-The Stats Collector process collects and reports the information, and
+The **Stats Collector** process collects and reports the information, and
 some add some overhead to query execution. This process can be disabled
 by changing the ``track_counts`` and ``track_activities`` parameters.
-The stats collector uses temp files stored in subdir ``pg_stat_tmp``.
+The Stats Collector uses temp files stored in subdir ``pg_stat_tmp``.
 Permanent stats are stored in the ``pg_catalog`` schema in the global
 subdirectory.
 
@@ -78,7 +77,7 @@ display how much space is being used by a database or tablespace.
 Example:
 
 ```sql
-select datname, pg_size_pretty(pg_database_size(datname)) from pg_database;
+SELECT datname, pg_size_pretty(pg_database_size(datname)) FROM pg_database;
 ```
 
 ## Tracking execution statistics
