@@ -9,7 +9,7 @@ switching from one WAL segment to another is called a _log switch_.
 ## WAL Archiving
 
 The **Archiver** is an optional background process that invokes the
-``archive_command`` when ``archive_mode`` is set to on. It copies the
+``archive_command`` when ``archive_mode`` is set to **on**. It copies the
 WAL segment when full and ready to be switched. Archive logs are copies
 of WAL segments. The name of the archive log is the same as the WAL
 segment, and are used for PITR and replication.
@@ -26,7 +26,7 @@ and setting the ``archive_mode`` parameter to on. The process executes
 * A WAL segment is switched.
 * Checkpoint is forced.
 * ``archive_timeout`` seconds pass.
-* ``pg_switch_xlog() function is called.
+* ``pg_switch_xlog()`` function is called.
 
 A checkpoint is forced if ``max_wal_size`` (default 1 GB) is to be
 exceeded, ``checkpoint_timeout`` seconds pass or whenever the
