@@ -16,7 +16,7 @@ Partitioning uses:
 * Bulk deletes may be accomplished by simply removing one of the
   partitions.
 * Seldom-used data can be migrated to cheaper and slower storage.
-* PG manaages partitioning via table inheritance. Each partition must be
+* Postgres manages partitioning via table inheritance. Each partition must be
   created as a child table of a single parent table.
 * The parent table itself is normally empty; it exists just to represent
   the entire data set.
@@ -42,9 +42,9 @@ Methods:
 
 ## Partitioning setup
 
-1. Create the base/master table (will contain no data, only defined
-   constrations for all partitions.
-2. Creat the child or partition table which each inherit from the master
+1. Create the base (master) table; this will contain no data, only defined
+   constraints for all partitions.
+2. Create the child or partition table(s) that each inherit from the master
    table.
 3. Add table constraints to the partition tables to define the allowed
    key values in each partition.
