@@ -155,7 +155,7 @@ Take a full backup of primary server:
 * Connect to the db as a superuser and issue the command: ``SELECT
   pg_start_backup('label');``
 * Perform the backup using a filesystem tool such as **tar**: ``cp -rp
-  /opt/Postgres/9.5/data /backup/data1
+  /opt/Postgres/9.5/data /backup/data1``
 * Connect to the db as a superuser and issue the command: ``SELECT
   pg_stop_backup();``
 * Copy the backup directory on to the standby server (possibly change
@@ -175,12 +175,12 @@ Setting up the standby server:
 Adding cascading Replicated Standby server:
 
 * Backup the primary server using **pg_basebackup**: ``pg_basebackup -h
-  localhost -U replication_user -p 5432 -D /backup/data2
+  localhost -U replication_user -p 5432 -D /backup/data2``
 * A new cluster will be created with data dir "data2".
 * Change the port if on the same machine.
 * Create **recovery.conf** file in new standby (``standby_mode = on,
   primary_conninfo='details'``)
-* Change pg_hba.conf of standby to allow conenction from data2 cluster.
+* Change ``pg_hba.conf`` of standby to allow conenction from data2 cluster.
 * Start the cluster.
 
 ## Monitoring Hot Standby
