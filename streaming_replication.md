@@ -78,37 +78,37 @@ node, but can only be asynchronous.
 7. Turn on ``standby_mode`` and set ``restore_command`` to copy file
    from the WAL archive location.
 
-Configure WAL archiving:
+Configure WAL archiving (Debian/Ubuntu):
 
-    $ sudo mkdir /arch_dest
-    $ sudo chown postgres:postgres /arch_dest
-    $ vi /opt/PostgreSOL/9.5/data/postgresq1.conf
+    $ sudo mkdir /mnt/archive_dest
+    $ sudo chown postgres:postgres /mnt/archive_dest
+    $ vi /etc/postgresql/9.5/<CLUSTER_NAME>/postgresq1.conf
         wal level = hot standby
         archive mode = on
-        archive cormmand = 'cp %p /arch_dest/ %f'
-    $ sudo service postgresq1—9.5 restart
+        archive command = 'cp %p /mnt/archive_dest/%f'
+    $ sudo service postgresql restart
 
 Take a base backup of primary and copy it to standby:
 
     $ psq1 -c "select pg_start_backup('Standby1');"
-    $ cp -rp /opt/PostgreSQL/9.5/data /home/postgres/standby1
+    $ cp -rp /var/lib/postgresql/9.5/<CLUSTER_NAME> standby-host:/var/lib/postgresql/9.5/<CLUSTER_STANDBY>
     $ psq1 -c "select pg_stop_backup();"
-    $ rm /home/postgres/standby/postmaster.pid
+    $ rm standby-host:/var/lib/postgresql/9.5/<CLUSTER_STANDBY>/postmaster.pid
 
 **Note**: postmaster.pid must be removed from standby and never
 from the master server data directory.
 
 On the standby, create ``recovery.conf``:
 
-    $ vi /home/postgres/standby1/recovery.conf
+    $ vi /var/lib/postgresql/9.5/<CLUSTER_STANDBY>/recovery.conf
         standby_mode = on
-        restore command = 'cp -rp /arch_dest %p'
-        archive_cleanup_command = 'pg_archivecleanup /arch_dest %r'
-        trigger_file = '/home/postgres/create_me_for_failover_5432'
+        restore command = 'cp -rp /mnt/archive_dest %p'
+        archive_cleanup_command = 'pg_archivecleanup /mnt/archive_dest %r'
+        trigger_file = '/var/lib/postgresql/9.5/<CLUSTER_STANDBY>/create_me_for_failover_5432'
 
 Open postgresql.conf and turn on hot standby mode:
 
-    $ vi standby1/postgresgl.conf
+    $ vi /var/lib/postgresql/9.5/<CLUSTER_STANDBY>/postgresgl.conf
         hot standby = on
 
 If testing on single machine, comment archive parameters and change
@@ -155,7 +155,7 @@ Take a full backup of primary server:
 * Connect to the db as a superuser and issue the command: ``SELECT
   pg_start_backup('label');``
 * Perform the backup using a filesystem tool such as **tar**: ``cp -rp
-  /opt/Postgres/9.5/data /backup/data1``
+  /var/lib/postgresql/9.5/<CLUSTER_NAME> /backup/data1``
 * Connect to the db as a superuser and issue the command: ``SELECT
   pg_stop_backup();``
 * Copy the backup directory on to the standby server (possibly change
