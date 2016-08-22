@@ -50,7 +50,7 @@ statistics, gathered with ANALYZE (plus other parameters). The EXPLAIN
 command is used to view a query plan, while ANALYZE will execute the
 query also and display some statistics about the execution. Syntax:
 
-    EXPLAIN [option] <SQL statement>;
+    EXPLAIN [ANALYZE] <SQL statement>;
 
 Plan components:
 
@@ -119,7 +119,7 @@ Bernoulli used seq IO, scans full table picking tuples randomly. Example:
 * Use equijoins wherever possible to improve SQL efficiency.
 * Try changing the access path and join order with hints.
 * Avoid full table scans if using an index is more efficient.
-* Try disabling sequential scans with ``set enable_seqscan=false;``
+* Try disabling sequential scans with ``SET enable_seqscan TO off;``
 * Join order can have a significant effect on performance.
 * Use views/materialized views for complex queries.
 
