@@ -1,9 +1,9 @@
 # Foreign Data Wrappers
 
 FDW enable access to non-Postgres databases. Acts like an adapter or
-interface to different data sources. RO FDWs introduced in 9.1, RW
+interface to different data sources. Readonly FDWs introduced in 9.1, read/write
 introduced in 9.3. Can also read non-relational data (CSV, JSON, XML).
-All data will appear as local PG table.
+All data will appear as a local PG table.
 
 A FDW consists of two components:
 
@@ -26,13 +26,20 @@ Set-up steps:
 Foreign server acts like an instance of an external data source,
 encapsulates connection info needed by FDW to connect.
 
-``CREATE SERVER server_name FOREIGN DATA WRAPPER fdw_name OPTIONS (host
-'hostname', port 'port', dbname 'my_db');``
+```sql
+CREATE SERVER server_name FOREIGN DATA WRAPPER fdw_name OPTIONS (host
+'hostname', port 'port', dbname 'my_db');
+CREATE SERVER myserver FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host
+'foo', dbname 'foodb', port '5432');
+```
 
 ## Create a user mapping (optional)
 
-``CREATE USER MAPPING FOR postgres SERVER myforeignserver OPTIONS (user
-'external_user', password 'password');``
+```sql
+CREATE USER MAPPING FOR postgres SERVER myforeignserver OPTIONS (user
+'external_user', password 'password');
+CREATE USER MAPPING FOR bob SERVER foo OPTIONS (user 'bob', password 'secret');
+```
 
 ## Create a foreign table
 
@@ -41,7 +48,7 @@ data structure). Can use ``IMPORT FOREIGN SCHEMA`` to generate.
 
 ## Query foreign table
 
-Foreign tables can be queried a local tables. Note that **postgres_fdw**
+Foreign tables can be queried as local tables. Note that **postgres_fdw**
 supports SELECT, INSERT, UPDATE and DELETE but not all operations are
 supported by all FDW extensions.
 
