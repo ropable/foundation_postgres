@@ -35,8 +35,8 @@ By default, autovacuuming is enable for databases (``postgres.conf``).
 The behaviour of autovacuum workers can be altered. Per-table settings
 can be set using ``ALTER TABLE`` (e.g. autovacuum_enabled).
 
-* ```VACUUM`` - removes dead rows and makes space available for reuse.
-* ```VACUUM FULL``` - more agressive algorithm, compacts table, takes
+* ``VACUUM`` - removes dead rows and makes space available for reuse.
+* ``VACUUM FULL`` - more agressive algorithm, compacts table, takes
   more time, requires extra space during operation. Requires an
   exclusive lock on each table.
 
