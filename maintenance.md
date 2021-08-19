@@ -44,7 +44,7 @@ can be set using ``ALTER TABLE`` (e.g. autovacuum_enabled).
 # Show the size of a table:
 SELECT pg_size_pretty(pg_relation_size('tablename'));
 # Show autovacuum parameters:
-SELECT name, settings FROM pg_settings WHERE name LIKE 'autovacuum%';
+SELECT name, setting FROM pg_settings WHERE name LIKE 'autovacuum%';
 ```
 
 The ``VACUUM`` command has a command line executable called
